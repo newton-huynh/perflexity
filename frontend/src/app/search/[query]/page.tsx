@@ -5,61 +5,89 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ChatBubble from "@/components/ChatBubble";
 import ChatSearchBar from "@/components/ChatSearchBar";
-
-interface Message {
-  question: string;
-  answer: string;
-}
+import { userProfile, messageHistory } from "@/lib/placeholder-data";
+import { Message } from "@/lib/definitions";
+import { useRef } from "react";
 
 export default function SearchPage() {
   const { query } = useParams() as { query: string };
   const [messages, setMessages] = useState<Message[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+    const testMode = true; // TODO: remove this
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      
+        if (testMode) {
+            setMessages(messageHistory);
+
+            return;
+        }
+        setMessages([{ question: query, answer: "" }]);
+        
     async function fetchInitial() {
       const res = await fetch("http://localhost:8000/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query, profile: userProfile }),
       });
 
       if (!res.ok) return console.error("Failed");
 
       const data = await res.json();
-      setMessages([{ question: query, answer: data.answer }]);
-      setLoading(false);
+      setMessages([{ question: query, answer: data.answer, citations: data.citations }]);
+
     }
 
     fetchInitial();
-  }, [query]);
+    }, [query]);
+    
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
-  const handleNewSearch = async (newQuestion: string) => {
-    const res = await fetch("http://localhost:8000/answer", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: newQuestion }),
-    });
+    const handleNewSearch = async (newQuestion: string) => {
+
+        // Step 1: Add the new question to the messages
+        setMessages((prev) => [...prev, { question: newQuestion, answer: "" }]);
+        
+        // Step 2: Fetch the answer from the server
+        const res = await fetch("http://localhost:8000/answer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: newQuestion, profile: userProfile }),
+        });
+
+        // Step 3: Update the messages with the answer
 
     if (!res.ok) return;
 
     const data = await res.json();
-    setMessages((prev) => [...prev, { question: newQuestion, answer: data.answer }]);
+    setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1] = {
+          ...updated[updated.length - 1],
+          answer: data.answer,
+        };
+        return updated;
+      });
   };
 
   return (
-    <div className="flex flex-col justify-between h-screen">
-      <div className="overflow-y-auto p-4 space-y-4">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          messages.map((msg, i) => (
-            <div key={i}>
-              <ChatBubble type="question" text={msg.question} />
-              <ChatBubble type="answer" text={msg.answer} />
-            </div>
-          ))
-        )}
+    <div className="flex flex-col justify-between h-full w-full pr-4 pl-4 sm:pr-2 sm:pl-2">
+      <div className="p-4 space-y-4 overflow-y-auto">
+              
+              {messages.map((msg, i) => (
+                <div key={i} className="flex flex-col">
+                      <ChatBubble type="question" text={msg.question} />
+                      {msg.answer ? (
+                          <ChatBubble type="answer" text={msg.answer} />
+                      ) : (
+                          <ChatBubble type="answer" text="Loading..." />
+                      )}
+                </div>
+            ))}
+            <div ref={messagesEndRef} />
       </div>
 
       <div className="border-t p-4">

@@ -13,14 +13,14 @@ function ChatBubble({ type, text }: ChatBubbleProps) {
 
   return (
     <div
-      className={`flex flex-col m-4 items-center ${
+      className={`flex flex-col items-center gap-2 p-2 ${
         type === "question" ? "self-end" : "self-start"
       }`}
     >
-      <div className={`text-stone-500 text-sm`}>
+      <div className={`text-stone-500 text-sm ${type === "question" ? "self-end mr-2" : "self-start ml-2"}`}>
         {type === "question" ? "You" : "Perflexity"}
       </div>
-      <div className={`p-4 rounded-lg max-w-xs ${bubbleStyle}`}>{text}</div>
+      <div className={`p-4 rounded-lg max-w-lg ${bubbleStyle}`}>{text}</div>
     </div>
   );
 }

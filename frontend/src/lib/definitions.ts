@@ -7,3 +7,14 @@ export type UserProfile = {
     age?: number;
     goal?: string;
 }
+
+export interface Message {
+    question: string;
+    answer: string;
+    citations?: Citation[];
+}
+
+export interface Citation {
+    title: string;
+    url: string;
+}
