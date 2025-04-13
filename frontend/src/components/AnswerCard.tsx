@@ -17,7 +17,7 @@ function AnswerCardHeader({
 }) {
   return (
     <h2
-      className={`text-sm flex-1 font-bold hover:cursor-pointer hover:text-blue-500 transition-all duration-300 ${header === activeHeader ? 'text-primary underline' : 'text-gray-500'}`}
+      className={`flex-1 font-bold hover:cursor-pointer hover:text-blue-500 transition-all duration-300 ${header === activeHeader ? 'text-primary underline' : 'text-gray-500'}`}
       onClick={() => setActiveHeader(header)}
     >
       {header}
@@ -43,8 +43,9 @@ function AnswerCardHeaders({
 export default function AnswerCard({ citations, answer }: AnswerCardProps) {
   const [activeHeader, setActiveHeader] = useState<string>("Answer");
   return (
-    <div className="flex flex-col w-full bg text-sm">
+    <div className="flex flex-col w-full">
           <AnswerCardHeaders activeHeader={activeHeader} setActiveHeader={setActiveHeader} />
+          <div>
           {activeHeader === "Answer" && <p>{answer}</p>}
           {activeHeader === "Citations" && citations.map((citation, index) => (
             <div key={index}>
@@ -53,7 +54,7 @@ export default function AnswerCard({ citations, answer }: AnswerCardProps) {
               </a>
             </div>
           ))}
-
+        </div>
     </div>
   );
 }
