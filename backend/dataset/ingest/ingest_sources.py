@@ -9,6 +9,10 @@ with open("backend/dataset/raw_sources.json") as f:
 
 final_docs = []
 
+# Iterates through each source in the raw_sources.json file
+# Processes the source based on its type (article or youtube)
+# If an error occurs during processing, it prints an error message
+# Writes the final list of processed documents to ingested_sources.json
 for src in sources:
     t = src["type"]
     url = src["url"]

@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from schema import StandardDoc
 import hashlib
 
+# Takes a raw HTML string and returns a cleaned text string
+# Removes unwanted elements and extracts paragraph text
 def clean_html(html: str) -> str:
     soup = BeautifulSoup(html, "html.parser")
 
@@ -14,6 +16,9 @@ def clean_html(html: str) -> str:
     paragraphs = [p.get_text(strip=True) for p in soup.find_all("p") if p.get_text(strip=True)]
     return "\n\n".join(paragraphs)
 
+# Takes a URL and returns a StandardDoc object
+# Parses the HTML content and extracts the title, author, content, and tags
+# Returns a StandardDoc object with the parsed data
 def process_article(url: str) -> StandardDoc:
     response = requests.get(url, timeout=10)
     response.raise_for_status()
