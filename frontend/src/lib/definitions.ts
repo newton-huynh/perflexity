@@ -4,15 +4,17 @@ export type UserProfile = {
     weight?: string;
     race?: string;
     gender?: string;
-    age?: number;
+    age?: string;
     goal?: string;
     diet?: string;
     frequency?: string;
-    squat?: number;
-    bench?: number;
-    deadlift?: number;
-    answer_style?: string;
+    squat?: string;
+    bench?: string;
+    deadlift?: string;
+    answerStyle?: string;
     influencer?: string;
+    responseLength?: number;
+    toggleCitations?: boolean;
 }
 
 export interface Message {

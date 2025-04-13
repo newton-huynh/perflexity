@@ -23,13 +23,15 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { saveProfile, getProfile, clearProfile } from "@/lib/storage";
 import Image from "next/image";
+import { UserProfile } from "@/lib/definitions";
 
 import WelcomeDialog from "./WelcomeDialog";
 import ProfileModal from "./ProfileModal";
-const defaultProfile = {
+const defaultProfile: UserProfile = {
   name: "",
   height: "",
   weight: "",
@@ -45,7 +47,7 @@ const defaultProfile = {
   answerStyle: "",
   influencer: "",
   responseLength: 5,
-  uploadedFile: "",
+  toggleCitations: false,
 };
 
 function LabelWrapper({
@@ -318,22 +320,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 min={1}
                 max={10}
                 step={1}
-                value={[profile.responseLength]}
+                value={[profile.responseLength ? profile.responseLength : 5]}
                 onValueChange={([val]) => update("responseLength", val)}
               />
             </LabelWrapper>
             <LabelWrapper>
-              <Label>Upload Your Workout Split</Label>
-              <Input
-                type="file"
-                accept=".pdf,.txt,.csv"
-                onChange={(e) =>
-                  update("uploadedFile", e.target.files?.[0]?.name || "")
-                }
-              />
-              {profile.uploadedFile && (
-                <p className="text-xs mt-1">Uploaded: {profile.uploadedFile}</p>
-              )}
+              <Label>Toggle Inline Citations</Label>
+              <Switch checked={profile.toggleCitations} onCheckedChange={(val) => update("toggleCitations", val)}  />
             </LabelWrapper>
           </CardContent>
         </Card>

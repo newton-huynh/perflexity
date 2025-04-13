@@ -32,6 +32,7 @@ async def answer_question(req: AnswerRequest):
     else:
         prompt = build_prompt(req.query, chunks)
 
+    print(prompt)
     # Step 4: Generate answer
     answer = generate_answer(prompt)
 
