@@ -14,7 +14,7 @@ export default function SearchPage() {
   const { query } = useParams() as { query: string };
   const [messages, setMessages] = useState<Message[]>([]);
 
-    const testMode = true; // TODO: remove this
+    const testMode = false; // TODO: remove this
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -62,8 +62,9 @@ export default function SearchPage() {
         // Step 3: Update the messages with the answer
 
     if (!res.ok) return;
-
-    const data = await res.json();
+    
+        const data = await res.json();
+        console.log(data);
     setMessages((prev) => {
         const updated = [...prev];
         updated[updated.length - 1] = {
