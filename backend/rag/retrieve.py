@@ -51,6 +51,8 @@ def retrieve_relevant_chunks(query_embedding: list[float], top_k: int = 5) -> li
     except Exception as e:
         print(f"❌ Failed to query Pinecone: {e}")
         return []
+    
+
 
 # TODO: Remove later this is hardcoded test
 query = "What's the best workout split for hypertrophy?"
