@@ -44,9 +44,10 @@ def retrieve_relevant_chunks(query_embedding: list[float], top_k: int = 5) -> li
                 "text": match.metadata.get("text", ""),
                 "title": match.metadata.get("title", ""),
                 "url": match.metadata.get("url", ""),
-                "score": match.score
+                "score": match.score,
+                "ranking": idx + 1
             }
-            for match in response.matches
+            for idx, match in enumerate(response.matches)
         ]
     except Exception as e:
         print(f"❌ Failed to query Pinecone: {e}")
@@ -54,13 +55,14 @@ def retrieve_relevant_chunks(query_embedding: list[float], top_k: int = 5) -> li
     
 
 
-# TODO: Remove later this is hardcoded test
-query = "What's the best workout split for hypertrophy?"
-vec = embed_query(query)
-results = retrieve_relevant_chunks(vec, top_k=5)
+# #TODO: Remove later this is hardcoded test
+# query = "What's the best workout split for hypertrophy?"
+# vec = embed_query(query)
+# results = retrieve_relevant_chunks(vec, top_k=5)
 
-for i, chunk in enumerate(results):
-    print(f"\n🔹 Match #{i+1}")
-    print(f"Title: {chunk['title']}")
-    print(f"Score: {chunk['score']:.4f}")
-    print(f"Snippet: {chunk['text'][:200]}...")
+# for i, chunk in enumerate(results):
+#     print(f"\n🔹 Match #{i+1}")
+#     print(f"Title: {chunk['title']}")
+#     print(f"Score: {chunk['score']:.4f}")
+#     print(f"Snippet: {chunk['text'][:200]}...")
+#     print(f"Ranking: {chunk['ranking']}")
