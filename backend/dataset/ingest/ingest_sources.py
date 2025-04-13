@@ -26,10 +26,15 @@ for src in sources:
             print(f"Unknown type: {t}")
             continue
 
+        if len(doc.content) < 100:
+            print(f"Skipping {url} because it has no content or too short")
+            continue
+
         final_docs.append(doc.to_dict())
 
     except Exception as e:
         print(f"Failed to process {url}: {e}")
+        continue
 
 with open("backend/dataset/ingested_sources.json", "w") as f:
     json.dump(final_docs, f, indent=2)

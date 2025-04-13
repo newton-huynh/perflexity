@@ -5,3 +5,4 @@ uvicorn
 tiktoken
 beautifulsoup4
 python-dotenv
+youtube-transcript-api

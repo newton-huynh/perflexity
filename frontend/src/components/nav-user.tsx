@@ -6,7 +6,7 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
-  Sparkles,
+  UserPen
 } from "lucide-react"
 
 import {
@@ -29,15 +29,21 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import ProfileModal from "@/components/ProfileModal";
+
 
 export function NavUser({
   user,
+  isProfileOpen,
+  setProfileOpen,
 }: {
   user: {
     name: string
     email: string
     avatar: string
   }
+  isProfileOpen: boolean
+  setProfileOpen: (open: boolean) => void
 }) {
   const { isMobile } = useSidebar()
 
@@ -79,29 +85,12 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            <DropdownMenuItem onSelect={(e) => {
+              e.preventDefault()
+            }}>
+              <UserPen />
+              <div onClick={() => setProfileOpen(true)}>Edit Profile</div>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <LogOut />
               Log out

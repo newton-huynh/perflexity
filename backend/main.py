@@ -1,9 +1,18 @@
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from rag.retrieve import embed_query, retrieve_relevant_chunks
 from rag.prompt import build_prompt, generate_answer
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # or "*" for all, but not recommended
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class AnswerRequest(BaseModel):
     query: str
@@ -18,14 +27,17 @@ async def answer_question(req: AnswerRequest):
     chunks = retrieve_relevant_chunks(query_vector, top_k=5)
 
     # Step 3: Construct prompt
-    prompt = build_prompt(req.query, chunks, req.profile)
+    if req.profile:
+        prompt = build_prompt(req.query, chunks, req.profile)
+    else:
+        prompt = build_prompt(req.query, chunks)
 
     # Step 4: Generate answer
     answer = generate_answer(prompt)
 
     # Step 5: Return answer + sources
     citations = [
-        { "title": c["title"], "url": c["url"] }
+        { "title": c["title"], "url": c["url"], "ranking": c["ranking"] }
         for c in chunks
     ]
 

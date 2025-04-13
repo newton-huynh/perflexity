@@ -1,5 +1,4 @@
 from youtube_transcript_api import YouTubeTranscriptApi
-from youtube_transcript_api.formatters import TextFormatter
 from schema import StandardDoc
 from dotenv import load_dotenv
 import os
@@ -60,7 +59,7 @@ def process_youtube(url: str) -> StandardDoc:
     source_id = hashlib.md5(url.encode()).hexdigest()
 
     return StandardDoc(
-        title=f"YouTube Video: {video_id}",
+        title=f"YouTube Video: {metadata['title']}",
         url=url,
         content=transcript_text,
         type="youtube",

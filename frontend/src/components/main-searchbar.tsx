@@ -4,25 +4,26 @@ import { Search } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import slugify from "slugify";
+import { useRouter } from "next/navigation";
 interface SearchBarProps {
   onSearch: (query: string) => void;
   placeholder?: string;
 }
 
-export function SearchBar({
-  onSearch,
+export function MainSearchBar({
   placeholder = "Search...",
 }: SearchBarProps) {
     const [query, setQuery] = useState("");
-    
-    const handleQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const router = useRouter();
+    const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
     };
 
   const handleSearch = () => {
     if (query.trim()) {
-      onSearch(query.trim());
+      const slugifiedQuery = slugify(query.trim(), { lower: true });
+      router.push(`/search/${slugifiedQuery}`);
     }
   };
 
@@ -42,7 +43,7 @@ export function SearchBar({
                 type="text"
                 placeholder={placeholder}
                 value={query}
-                onChange={handleQuery}
+                onChange={handleQueryChange}
                 onKeyDown={handleKeyDown}
                 className="pl-9 pr-4 h-10 rounded-full bg-background border-input hover:border-primary/50 focus-visible:ring-1"
             />
