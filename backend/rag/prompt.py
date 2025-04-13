@@ -1,4 +1,4 @@
-from retrieve import embed_query, retrieve_relevant_chunks
+from .retrieve import embed_query, retrieve_relevant_chunks
 from openai import OpenAI
 import os
 
@@ -36,6 +36,7 @@ Use the context below to answer clearly and of the user's desired answer style:
 Cite your sources inline using bracketed numbers that correspond to the provided context chunks. 
 For example, use [1], [2], [3] if referring to Context #1, Context #2, and Context #3 respectively.
 These numbers should match the order in which the context chunks are presented so that citations can later be mapped to their original sources.
+Only cite sources if they are directly relevant to the user's question.
 ---
 {chr(10).join(context_blocks)}
 
@@ -60,20 +61,20 @@ def generate_answer(prompt: str, model="gpt-3.5-turbo") -> dict:
         return "Sorry, something went wrong while generating the answer."
     
 # TODO: Remove later this is hardcoded test
-# query = "What's the best workout split for hypertrophy?"
-# profile = {
-#     "goal": "hypertrophy",
-#     "diet": None,
-#     "experience": "beginner",
-#     "weight": 10,
-#     "height": "5'8",
-#     "answer_style": "detailed"
-# }
+query = "What's the best workout split for hypertrophy?"
+profile = {
+    "goal": "hypertrophy",
+    "diet": None,
+    "experience": "beginner",
+    "weight": 10,
+    "height": "5'8",
+    "answer_style": "detailed"
+}
 
-# vec = embed_query(query)
-# chunks = retrieve_relevant_chunks(vec, top_k=5)
-# prompt = build_prompt(query, chunks, profile)
-# answer = generate_answer(prompt)
+vec = embed_query(query)
+chunks = retrieve_relevant_chunks(vec, top_k=5)
+prompt = build_prompt(query, chunks, profile)
+answer = generate_answer(prompt)
 
-# print("\n🧠 Final Answer:\n")
-# print(answer)
+print("\n🧠 Final Answer:\n")
+print(answer)
