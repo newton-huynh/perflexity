@@ -10,6 +10,8 @@ PINECONE_ENV = os.getenv("PINECONE_ENV")
 PINECONE_INDEX = os.getenv("PINECONE_INDEX")
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+# Retrieval system for finding relevant text chunks from Pinecone vector database
+# Uses OpenAI embeddings to convert queries into vectors for semantic search
 def embed_query(query: str) -> list[float]:
     try:
         response = client.embeddings.create(
@@ -25,6 +27,10 @@ def embed_query(query: str) -> list[float]:
 pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(PINECONE_INDEX)
 
+# Takes a query embedding vector and returns the top_k most semantically similar text chunks from Pinecone
+# The query_embedding should be a list of floats generated from the embed_query() function
+# Returns a list of dicts containing the matched chunks' text, title, url and similarity score
+# If the Pinecone query fails, returns an empty list
 def retrieve_relevant_chunks(query_embedding: list[float], top_k: int = 5) -> list[dict]:
     try:
         response = index.query(

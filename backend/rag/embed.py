@@ -30,8 +30,11 @@ if not pc.has_index(PINECONE_INDEX):
 
 # Load index object
 index = pc.Index(PINECONE_INDEX)
-
 client = OpenAI(api_key=OPENAI_API_KEY)
+
+# Takes a list of text strings and returns a list of embedding vectors
+# Uses OpenAI's embedding model to convert text into dense vector representations
+# Returns a list of lists, where each inner list contains the embedding for a single text string
 def embed_text_batch(texts: list[str]) -> list[list[float]]:
     try:
         response = client.embeddings.create(

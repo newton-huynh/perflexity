@@ -9,7 +9,8 @@ import hashlib
 load_dotenv()
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
-
+# Extracts the video ID from a YouTube URL
+# Returns the video ID as a string
 def extract_video_id(url: str) -> str:
     if "v=" in url:
         return url.split("v=")[-1].split("&")[0]
@@ -17,7 +18,9 @@ def extract_video_id(url: str) -> str:
         return url.split("youtu.be/")[-1]
     else:
         raise ValueError("Invalid YouTube URL")
-    
+ 
+# Retrieves metadata for a YouTube video
+# Returns a dictionary containing the video's title, channel name, channel URL, published date, thumbnail URL, and tags
 def get_youtube_metadata(video_id: str, api_key: str) -> dict:
     url = "https://www.googleapis.com/youtube/v3/videos"
     params = {
@@ -41,6 +44,9 @@ def get_youtube_metadata(video_id: str, api_key: str) -> dict:
         "tags": snippet["tags"]
     }
 
+# Processes a YouTube video URL and returns a StandardDoc object
+# Extracts the video ID, retrieves metadata, and retrieves the transcript
+# Returns a StandardDoc object with the processed data
 def process_youtube(url: str) -> StandardDoc:
     video_id = extract_video_id(url)
     metadata = get_youtube_metadata(video_id, YOUTUBE_API_KEY)

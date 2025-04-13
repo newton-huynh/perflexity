@@ -3,9 +3,13 @@ import json
 # Use the tokenizer for OpenAI's embedding model
 enc = tiktoken.encoding_for_model("text-embedding-3-small")
 
+# Takes a text string and returns the number of tokens in the text
 def count_tokens(text: str) -> int:
     return len(enc.encode(text))
 
+# Takes a text string and returns a list of chunks of text
+# Each chunk is a string of text that is no longer than max_tokens
+# The chunks are overlapping by overlap percent
 def chunk_text(
     text: str,
     max_tokens: int = 300,
@@ -24,10 +28,4 @@ def chunk_text(
     print(len(chunks))
     return chunks
 
-# Test the chunk_text function
-# if __name__ == "__main__":
-#     with open("backend/dataset/ingested_sources.json") as f:
-#         sources = json.load(f)
-#     text = sources[0]["content"]  # Test with first document's content
-#     chunks = chunk_text(text)
-#     print(chunks[1])
+
