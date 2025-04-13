@@ -38,7 +38,7 @@ function ChatBubble({ type, text, citations }: ChatBubbleProps) {
 
   return (
     <div
-      className={`flex flex-col items-center gap-2 p-2 ${
+      className={`flex flex-col items-center gap-2 p-2 w-full ${
         type === "question" ? "self-end" : "self-start"
       }`}
     >
@@ -49,7 +49,7 @@ function ChatBubble({ type, text, citations }: ChatBubbleProps) {
       >
         {type === "question" ? "You" : "Perflexity"}
       </div>
-      <div className={`p-4 rounded-lg max-w-2xl ${bubbleStyle}`}>
+      <div className={`p-4 rounded-lg max-w-2xl min-w-1/2 ${bubbleStyle}`}>
         {renderContent()}
       </div>
     </div>

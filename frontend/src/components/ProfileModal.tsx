@@ -280,9 +280,9 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
           </TabsContent>
         </Tabs>
 
-        <div className="mt-4 flex justify-end gap-2">
-          <Button onClick={handleClear} className="bg-red-500 hover:bg-red-600 self-start">Clear</Button>
-          <Button onClick={handleSave}>Save</Button>
+        <div className="mt-2 flex gap-2 w-full justify-around ">
+          <Button onClick={handleClear} className="bg-red-300 hover:bg-red-600 self-start">Clear</Button>
+          <Button onClick={handleSave} className="hover:bg-green-600">Save</Button>
         </div>
       </DialogContent>
     </Dialog>

@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/sidebar"
 import WelcomeDialog from "@/components/WelcomeDialog"
 import ProfileModal from "@/components/ProfileModal"
+import Image from "next/image"
 
 const data = {
   user: {
@@ -85,8 +86,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
+                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-md overflow-hidden">
+                  <Image src="/images/logo.png" alt="logo" width={32} height={32} />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Acme Inc</span>

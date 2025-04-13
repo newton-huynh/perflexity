@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getProfile } from "@/lib/storage";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function WelcomeDialog({ isProfileOpen, setProfileOpen }: { isProfileOpen: boolean, setProfileOpen: (open: boolean) => void }) {
   const [open, setOpen] = useState(false);

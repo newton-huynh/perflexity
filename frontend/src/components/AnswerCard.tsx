@@ -1,60 +1,39 @@
+"use client";
+
 import { Citation } from "@/lib/definitions";
-import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface AnswerCardProps {
   citations: Citation[];
   answer: string;
 }
 
-function AnswerCardHeader({
-    header,
-    activeHeader,
-  setActiveHeader,
-}: {
-  header: string;
-  activeHeader: string;
-  setActiveHeader: (header: string) => void;
-}) {
-  return (
-    <h2
-      className={`flex-1 font-bold hover:cursor-pointer hover:text-blue-500 transition-all duration-300 ${header === activeHeader ? 'text-primary underline' : 'text-gray-500'}`}
-      onClick={() => setActiveHeader(header)}
-    >
-      {header}
-    </h2>
-  );
-}
-
-function AnswerCardHeaders({
-  activeHeader,
-  setActiveHeader,
-}: {
-  activeHeader: string;
-  setActiveHeader: (header: string) => void;
-}) {
-  return (
-    <div className="flex flex-row justify-around mb-2">
-      <AnswerCardHeader header="Answer" activeHeader={activeHeader} setActiveHeader={setActiveHeader} />
-      <AnswerCardHeader header="Citations" activeHeader={activeHeader} setActiveHeader={setActiveHeader} />
-    </div>
-  );
-}
-
 export default function AnswerCard({ citations, answer }: AnswerCardProps) {
-  const [activeHeader, setActiveHeader] = useState<string>("Answer");
   return (
     <div className="flex flex-col w-full">
-          <AnswerCardHeaders activeHeader={activeHeader} setActiveHeader={setActiveHeader} />
-          <div>
-          {activeHeader === "Answer" && <p>{answer}</p>}
-          {activeHeader === "Citations" && citations.map((citation, index) => (
-            <div key={index}>
-              <a href={citation.url} target="_blank" rel="noopener noreferrer">
+      <Tabs defaultValue="answer" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="answer">Answer</TabsTrigger>
+          <TabsTrigger value="citations">Citations</TabsTrigger>
+        </TabsList>
+        <TabsContent value="answer">
+          <p>{answer}</p>
+        </TabsContent>
+        <TabsContent value="citations">
+          {citations.map((citation, index) => (
+            <div key={index} className="mb-2">
+              <a
+                href={citation.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
                 {citation.ranking}. {citation.title}
               </a>
             </div>
           ))}
-        </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
