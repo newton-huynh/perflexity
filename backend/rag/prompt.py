@@ -11,12 +11,19 @@ def build_prompt(query: str, chunks: list[dict], user_profile: dict = None) -> s
     profile_str = ""
     if user_profile:
         profile_str = "\n".join([
+            f"- Name: {user_profile.get('name', 'N/A')}",
+            f"- Gender: {user_profile.get('gender', 'N/A')}",
+            f"- Race: {user_profile.get('race', 'N/A')}",
+            f"- Age: {user_profile.get('age', 'N/A')}",
             f"- Goal: {user_profile.get('goal', 'N/A')}",
             f"- Diet: {user_profile.get('diet', 'N/A')}",
+            f"- Gym Frequency: {user_profile.get('frequency', 'N/A')}",
             f"- Experience: {user_profile.get('experience', 'N/A')}",
             f"- Weight: {user_profile.get('weight', 'N/A')} lbs",
             f"- Height: {user_profile.get('height', 'N/A')}",
-            f"- The user prefers a {user_profile.get('answer_style', 'N/A')} answer style"
+            f"- The user prefers a {user_profile.get('answer_style', 'N/A')} answer style",
+            f"- Favorite Influencer: {user_profile.get('influencer', 'N/A')}",
+            f"- Lifting Maxes: Squat: {user_profile.get('squat', 'N/A')} lbs, Bench: {user_profile.get('bench', 'N/A')} lbs, Deadlift: {user_profile.get('deadlift', 'N/A')} lbs"
         ])
 
     context_blocks = [

@@ -31,6 +31,13 @@ This is the backend for **Perflexity**, a personalized fitness-focused answer en
 ├── main.py                 # FastAPI entrypoint
 ├── requirements.txt
 
+## Feeding the RAG
+
+- cd into root directory
+- add raw sources to raw_sources.json
+- run python backend/dataset/ingest/ingest_sources.py
+- run python backend/rag/build_embeddings
+
 ## 🔧 Setup
 
 1. Install dependencies
