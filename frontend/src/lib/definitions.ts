@@ -11,10 +11,11 @@ export type UserProfile = {
 export interface Message {
     question: string;
     answer: string;
-    citations?: Citation[];
+    citations: Citation[];
 }
 
 export interface Citation {
     title: string;
     url: string;
+    ranking: number;
 }

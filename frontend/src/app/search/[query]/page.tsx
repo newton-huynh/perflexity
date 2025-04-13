@@ -23,7 +23,7 @@ export default function SearchPage() {
 
             return;
         }
-        setMessages([{ question: query, answer: "" }]);
+        setMessages([{ question: query, answer: "", citations: [] }]);
         
     async function fetchInitial() {
       const res = await fetch("http://localhost:8000/answer", {
@@ -49,7 +49,7 @@ export default function SearchPage() {
     const handleNewSearch = async (newQuestion: string) => {
 
         // Step 1: Add the new question to the messages
-        setMessages((prev) => [...prev, { question: newQuestion, answer: "" }]);
+        setMessages((prev) => [...prev, { question: newQuestion, answer: "", citations: [] }]);
         
         // Step 2: Fetch the answer from the server
         const res = await fetch("http://localhost:8000/answer", {
@@ -68,6 +68,7 @@ export default function SearchPage() {
         updated[updated.length - 1] = {
           ...updated[updated.length - 1],
           answer: data.answer,
+          citations: data.citations,
         };
         return updated;
       });
@@ -81,7 +82,7 @@ export default function SearchPage() {
                 <div key={i} className="flex flex-col">
                       <ChatBubble type="question" text={msg.question} />
                       {msg.answer ? (
-                          <ChatBubble type="answer" text={msg.answer} />
+                          <ChatBubble type="answer" text={msg.answer} citations={msg.citations} />
                       ) : (
                           <ChatBubble type="answer" text="Loading..." />
                       )}

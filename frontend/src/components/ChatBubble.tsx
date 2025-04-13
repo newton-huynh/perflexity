@@ -1,11 +1,13 @@
 import React from "react";
-
+import { Citation } from "@/lib/definitions";
+import AnswerCard from "@/components/AnswerCard";
 interface ChatBubbleProps {
   type: "question" | "answer";
   text: string;
+  citations?: Citation[];
 }
 
-function ChatBubble({ type, text }: ChatBubbleProps) {
+function ChatBubble({ type, text, citations }: ChatBubbleProps) {
   const bubbleStyle =
     type === "question"
       ? "bg-blue-500 text-white self-end"
@@ -20,7 +22,9 @@ function ChatBubble({ type, text }: ChatBubbleProps) {
       <div className={`text-stone-500 text-sm ${type === "question" ? "self-end mr-2" : "self-start ml-2"}`}>
         {type === "question" ? "You" : "Perflexity"}
       </div>
-      <div className={`p-4 rounded-lg max-w-lg ${bubbleStyle}`}>{text}</div>
+          <div className={`p-4 rounded-lg max-w-2xl ${bubbleStyle}`}>
+              {type == "question" ? text : <AnswerCard citations={citations || []} answer={text}/>}
+          </div>
     </div>
   );
 }

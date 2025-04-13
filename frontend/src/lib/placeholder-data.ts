@@ -17,23 +17,28 @@ export const messageHistory: Message[] = [
         citations: [
             {
                 "title": "The Best Workout Splits For Every Goal | Gymshark Central",
-                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal"
+                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal",
+                "ranking": 1
               },
               {
                 "title": "The Best Workout Splits For Every Goal | Gymshark Central",
-                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal"
+                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal",
+                "ranking": 2
               },
               {
                 "title": "The Best Workout Splits For Every Goal | Gymshark Central",
-                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal"
+                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal",
+                "ranking": 3
               },
               {
                 "title": "The Best Workout Splits For Every Goal | Gymshark Central",
-                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal"
+                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal",
+                "ranking": 4
               },
               {
                 "title": "The Best Workout Splits For Every Goal | Gymshark Central",
-                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal"
+                "url": "https://www.gymshark.com/blog/article/the-best-workout-splits-for-every-goal",
+                "ranking": 5
               }
         ],
     },
@@ -44,10 +49,12 @@ export const messageHistory: Message[] = [
             {
                 title: "The Science of Muscle Growth",
                 url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6950543/",
+                ranking: 1
             },
             {
                 title: "Training Frequency for Muscle Hypertrophy",
                 url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5485202/",
+                ranking: 2
             },
         ],
     },
@@ -58,10 +65,12 @@ export const messageHistory: Message[] = [
             {
                 title: "Protein Requirements for Muscle Gain",
                 url: "https://jissn.biomedcentral.com/articles/10.1186/s12970-017-0187-8",
+                ranking: 1
             },
             {
                 title: "Nutrition for Muscle Growth",
                 url: "https://www.precisionnutrition.com/all-about-muscle-building",
+                ranking: 2
             },
         ],
     }
