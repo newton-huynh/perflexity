@@ -4,7 +4,7 @@ from articles import process_article
 from youtube import process_youtube
 
 
-with open("dataset/raw_sources.json") as f:
+with open("backend/dataset/raw_sources.json") as f:
     sources = json.load(f)
 
 final_docs = []
@@ -27,5 +27,5 @@ for src in sources:
     except Exception as e:
         print(f"Failed to process {url}: {e}")
 
-with open("dataset/ingested_sources.json", "w") as f:
+with open("backend/dataset/ingested_sources.json", "w") as f:
     json.dump(final_docs, f, indent=2)

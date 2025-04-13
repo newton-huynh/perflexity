@@ -1,10 +1,14 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import TextFormatter
 from schema import StandardDoc
+from dotenv import load_dotenv
+import os
 import requests
 import hashlib
 
-YOUTUBE_API_KEY = "AIzaSyC5ulKPFU0s42YlCBeD6sIWAAyo6igJsp8"
+load_dotenv()
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+
 
 def extract_video_id(url: str) -> str:
     if "v=" in url:
