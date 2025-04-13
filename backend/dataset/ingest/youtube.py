@@ -47,7 +47,7 @@ def process_youtube(url: str) -> StandardDoc:
     transcript = YouTubeTranscriptApi.get_transcript(video_id)
 
 
-    transcript_text = "".join([segment["text"] for segment in transcript])
+    transcript_text = " ".join([segment["text"] for segment in transcript])
 
     # Optional metadata
     tags = ["youtube"]

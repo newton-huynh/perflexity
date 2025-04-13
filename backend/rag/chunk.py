@@ -21,7 +21,7 @@ def chunk_text(
         chunk_text = enc.decode(chunk_tokens)
         if len(chunk_text.strip()) > 50:
             chunks.append(chunk_text.strip())
-
+    print(len(chunks))
     return chunks
 
 # Test the chunk_text function
