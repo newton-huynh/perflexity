@@ -85,7 +85,7 @@ export default function SearchPage() {
                       {msg.answer ? (
                           <ChatBubble type="answer" text={msg.answer} citations={msg.citations} />
                       ) : (
-                          <ChatBubble type="answer" text="Loading..." />
+                          <ChatBubble type="loading" text="Loading..." />
                       )}
                 </div>
             ))}

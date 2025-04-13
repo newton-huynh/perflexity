@@ -2,7 +2,7 @@ import React from "react";
 import { Citation } from "@/lib/definitions";
 import AnswerCard from "@/components/AnswerCard";
 interface ChatBubbleProps {
-  type: "question" | "answer";
+  type: "question" | "answer" | "loading";
   text: string;
   citations?: Citation[];
 }
@@ -23,7 +23,7 @@ function ChatBubble({ type, text, citations }: ChatBubbleProps) {
         {type === "question" ? "You" : "Perflexity"}
       </div>
           <div className={`p-4 rounded-lg max-w-2xl ${bubbleStyle}`}>
-              {type == "question" ? text : <AnswerCard citations={citations || []} answer={text}/>}
+              {type == "question" || type == "loading" ? text : <AnswerCard citations={citations || []} answer={text}/>}
           </div>
     </div>
   );
