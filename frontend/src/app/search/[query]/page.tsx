@@ -14,7 +14,7 @@ export default function SearchPage() {
   const { query } = useParams() as { query: string };
   const [messages, setMessages] = useState<Message[]>([]);
 
-    const testMode = true; // TODO: remove this
+    const testMode = false; // TODO: remove this
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

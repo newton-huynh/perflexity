@@ -28,7 +28,7 @@ import { useState } from "react";
 import { saveProfile, getProfile, clearProfile } from "@/lib/storage";
 
 
-function LabelWrapper({ children, className }: { children: React.ReactNode, className?: string }) {
+export function LabelWrapper({ children, className }: { children: React.ReactNode, className?: string }) {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
       {children}
@@ -36,58 +36,11 @@ function LabelWrapper({ children, className }: { children: React.ReactNode, clas
   );
 }
 
-export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (open: boolean) => void }) {
+export default function ProfileModal({ isProfileOpen, setProfileOpen, setProfile, handleSave, handleReset, profile }: { isProfileOpen: boolean, setProfileOpen: (open: boolean) => void, setProfile: (profile: any) => void, handleSave: () => void, handleReset: (  ) => void, profile: any }) {
 
-  const [profile, setProfile] = useState(getProfile() ?? {
-    name: "",
-    height: "",
-    weight: "",
-    gender: "",
-    race: "",
-    age: "",
-    goal: "",
-    diet: "",
-    frequency: "",
-    squat: "",
-    bench: "",
-    deadlift: "",
-    answerStyle: "",
-    influencer: "",
-  });
-
-  const updateProfile = (key: string, value: string) => {
-    setProfile((prev: any) => ({ ...prev, [key]: value }));
-  };
-
-  const handleSave = () => {
-    saveProfile(profile);
-    console.log("Saved profile:", profile);
-    setIsOpen(false);
-  };
-
-  const handleClear = () => {
-    clearProfile();
-    setProfile({
-      name: "",
-      height: "",
-      weight: "",
-      gender: "",
-      race: "",
-      age: "",
-      goal: "",
-      diet: "",
-      frequency: "",
-      squat: "",
-      bench: "",
-      deadlift: "", 
-      answerStyle: "",
-      influencer: "",
-    }); 
-  
-  };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isProfileOpen} onOpenChange={setProfileOpen}>
       <DialogContent className=" max-w-3xl ">
         <DialogHeader>
           <DialogTitle>Edit Your Fitness Profile</DialogTitle>
@@ -111,7 +64,7 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                   <Label>Name</Label>
                   <Input
                     value={profile.name}
-                    onChange={(e) => updateProfile("name", e.target.value)}
+                    onChange={(e) => setProfile({...profile, name: e.target.value})}
                     placeholder={profile.name}
                   />
                 </LabelWrapper>
@@ -119,7 +72,7 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                   <Label>Height</Label>
                   <Input
                     value={profile.height}
-                    onChange={(e) => updateProfile("height", e.target.value)}
+                    onChange={(e) => setProfile({...profile, height: e.target.value})}
                     placeholder={profile.height}
                   />
                 </LabelWrapper>
@@ -127,14 +80,14 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                   <Label>Weight (lbs)</Label>
                   <Input
                     value={profile.weight}
-                    onChange={(e) => updateProfile("weight", e.target.value)}
+                    onChange={(e) => setProfile({...profile, weight: e.target.value})}
                     placeholder={profile.weight}
                   />
                 </LabelWrapper>
                 <LabelWrapper>
                   <Label>Gender</Label>
                   <Select
-                    onValueChange={(val) => updateProfile("gender", val)}
+                    onValueChange={(val) => setProfile({...profile, gender: val})}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder={profile.gender || "Select gender"} />
@@ -150,14 +103,14 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                   <Label>Race</Label>
                   <Input
                     value={profile.race}
-                    onChange={(e) => updateProfile("race", e.target.value)}
+                    onChange={(e) => setProfile({...profile, race: e.target.value})}
                   />
                 </LabelWrapper>
                 <LabelWrapper>
                   <Label>Age</Label>
                   <Input
                     value={profile.age}
-                    onChange={(e) => updateProfile("age", e.target.value)}
+                    onChange={(e) => setProfile({...profile, age: e.target.value})}
                   />
                 </LabelWrapper>
               </CardContent>
@@ -174,7 +127,7 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                 <LabelWrapper>
                   <Label>Fitness Goal</Label>
                   <Select
-                    onValueChange={(val) => updateProfile("goal", val)}
+                    onValueChange={(val) => setProfile({...profile, goal: val})}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select goal" />
@@ -189,7 +142,7 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                 </LabelWrapper>
                 <LabelWrapper>
                   <Label>Diet</Label>
-                  <Select onValueChange={(val) => updateProfile("diet", val)}>
+                  <Select onValueChange={(val) => setProfile({...profile, diet: val})}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select diet" />
                     </SelectTrigger>
@@ -204,7 +157,7 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                 </LabelWrapper>
                 <LabelWrapper>
                   <Label>Gym Frequency</Label>
-                  <Select onValueChange={(val) => updateProfile("frequency", val)}>
+                  <Select onValueChange={(val) => setProfile({...profile, frequency: val})}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select frequency" />
                     </SelectTrigger>
@@ -231,28 +184,28 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                   <Label>Squat Max (lbs)</Label>
                   <Input
                     value={profile.squat}
-                    onChange={(e) => updateProfile("squat", e.target.value)}
+                    onChange={(e) => setProfile({...profile, squat: e.target.value})}
                   />
                 </LabelWrapper>
                 <LabelWrapper>
                   <Label>Bench Max (lbs)</Label>
                   <Input
                     value={profile.bench}
-                    onChange={(e) => updateProfile("bench", e.target.value)}
+                    onChange={(e) => setProfile({...profile, bench: e.target.value})}
                   />
                 </LabelWrapper>
                 <LabelWrapper>
                   <Label>Deadlift Max (lbs)</Label>
                   <Input
                     value={profile.deadlift}
-                    onChange={(e) => updateProfile("deadlift", e.target.value)}
+                    onChange={(e) => setProfile({...profile, deadlift: e.target.value})}
                   />
                 </LabelWrapper>
                 <LabelWrapper>
                   <Label>Answer Style</Label>
                   <Select
                     onValueChange={(val) =>
-                      updateProfile("answerStyle", val)
+                      setProfile({...profile, answerStyle: val})
                     }
                   >
                     <SelectTrigger>
@@ -270,7 +223,7 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
                   <Input
                     value={profile.influencer}
                     onChange={(e) =>
-                      updateProfile("influencer", e.target.value)
+                      setProfile({...profile, influencer: e.target.value})
                     }
                     placeholder="e.g. Jeff Nippard, Jessie James West"
                   />
@@ -281,7 +234,7 @@ export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, s
         </Tabs>
 
         <div className="mt-2 flex gap-2 w-full justify-around ">
-          <Button onClick={handleClear} className="bg-red-300 hover:bg-red-600 self-start">Clear</Button>
+          <Button onClick={handleReset} className="bg-red-300 hover:bg-red-600 self-start">Clear</Button>
           <Button onClick={handleSave} className="hover:bg-green-600">Save</Button>
         </div>
       </DialogContent>
