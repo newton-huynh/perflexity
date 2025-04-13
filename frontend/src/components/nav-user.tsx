@@ -30,6 +30,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import ProfileModal from "@/components/ProfileModal";
+
+
+
 export function NavUser({
   user,
 }: {

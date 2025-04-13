@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ChatBubble from "@/components/ChatBubble";
 import ChatSearchBar from "@/components/ChatSearchBar";
-import { userProfile, messageHistory } from "@/lib/placeholder-data";
+import { messageHistory } from "@/lib/placeholder-data";
 import { Message } from "@/lib/definitions";
 import { useRef } from "react";
+import { getProfile } from "@/lib/storage";
 
 export default function SearchPage() {
   const { query } = useParams() as { query: string };
@@ -29,7 +30,7 @@ export default function SearchPage() {
       const res = await fetch("http://localhost:8000/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, profile: userProfile }),
+        body: JSON.stringify({ query, profile: getProfile() ?? {} }),
       });
 
       if (!res.ok) return console.error("Failed");
@@ -55,7 +56,7 @@ export default function SearchPage() {
         const res = await fetch("http://localhost:8000/answer", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ query: newQuestion, profile: userProfile }),
+            body: JSON.stringify({ query: newQuestion, profile: getProfile() ?? {} }),
         });
 
         // Step 3: Update the messages with the answer

@@ -25,6 +25,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { saveProfile, getProfile, clearProfile } from "@/lib/storage";
 
 
 function LabelWrapper({ children, className }: { children: React.ReactNode, className?: string }) {
@@ -36,7 +37,8 @@ function LabelWrapper({ children, className }: { children: React.ReactNode, clas
 }
 
 export default function ProfileModal() {
-  const [profile, setProfile] = useState({
+  const [isOpen, setIsOpen] = useState(false);
+  const [profile, setProfile] = useState(getProfile() ?? {
     name: "",
     height: "",
     weight: "",
@@ -54,15 +56,38 @@ export default function ProfileModal() {
   });
 
   const updateProfile = (key: string, value: string) => {
-    setProfile((prev) => ({ ...prev, [key]: value }));
+    setProfile((prev: any) => ({ ...prev, [key]: value }));
   };
 
   const handleSave = () => {
+    saveProfile(profile);
     console.log("Saved profile:", profile);
+    setIsOpen(false);
+  };
+
+  const handleClear = () => {
+    clearProfile();
+    setProfile({
+      name: "",
+      height: "",
+      weight: "",
+      gender: "",
+      race: "",
+      age: "",
+      goal: "",
+      diet: "",
+      frequency: "",
+      squat: "",
+      bench: "",
+      deadlift: "", 
+      answerStyle: "",
+      influencer: "",
+    }); 
+  
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <div>Edit Profile</div>
       </DialogTrigger>
@@ -90,6 +115,7 @@ export default function ProfileModal() {
                   <Input
                     value={profile.name}
                     onChange={(e) => updateProfile("name", e.target.value)}
+                    placeholder={profile.name}
                   />
                 </LabelWrapper>
                 <LabelWrapper>
@@ -97,7 +123,7 @@ export default function ProfileModal() {
                   <Input
                     value={profile.height}
                     onChange={(e) => updateProfile("height", e.target.value)}
-                    placeholder="e.g. 5'10"
+                    placeholder={profile.height}
                   />
                 </LabelWrapper>
                 <LabelWrapper>
@@ -105,6 +131,7 @@ export default function ProfileModal() {
                   <Input
                     value={profile.weight}
                     onChange={(e) => updateProfile("weight", e.target.value)}
+                    placeholder={profile.weight}
                   />
                 </LabelWrapper>
                 <LabelWrapper>
@@ -113,7 +140,7 @@ export default function ProfileModal() {
                     onValueChange={(val) => updateProfile("gender", val)}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select gender" />
+                      <SelectValue placeholder={profile.gender || "Select gender"} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="male">Male</SelectItem>
@@ -256,7 +283,8 @@ export default function ProfileModal() {
           </TabsContent>
         </Tabs>
 
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex justify-end gap-2">
+          <Button onClick={handleClear} className="bg-red-500 hover:bg-red-600 self-start">Clear</Button>
           <Button onClick={handleSave}>Save</Button>
         </div>
       </DialogContent>
