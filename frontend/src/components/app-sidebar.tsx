@@ -13,7 +13,7 @@ import {
   Settings2,
   SquareTerminal,
 } from "lucide-react"
-
+import { useState } from "react"
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavSecondary } from "@/components/nav-secondary"
@@ -27,6 +27,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import WelcomeDialog from "@/components/WelcomeDialog"
+import ProfileModal from "@/components/ProfileModal"
 
 const data = {
   user: {
@@ -71,6 +73,8 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const [isProfileOpen, setProfileOpen] = useState(false);
   return (
     <Sidebar
       className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
@@ -97,8 +101,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
+      <ProfileModal isOpen={isProfileOpen} setIsOpen={setProfileOpen}/>
+      <WelcomeDialog isProfileOpen={isProfileOpen} setProfileOpen={setProfileOpen}/>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={data.user} isProfileOpen={isProfileOpen} setProfileOpen={setProfileOpen}/>
       </SidebarFooter>
     </Sidebar>
   )

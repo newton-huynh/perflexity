@@ -36,8 +36,8 @@ function LabelWrapper({ children, className }: { children: React.ReactNode, clas
   );
 }
 
-export default function ProfileModal() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function ProfileModal({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (open: boolean) => void }) {
+
   const [profile, setProfile] = useState(getProfile() ?? {
     name: "",
     height: "",
@@ -88,10 +88,7 @@ export default function ProfileModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <div>Edit Profile</div>
-      </DialogTrigger>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className=" max-w-3xl ">
         <DialogHeader>
           <DialogTitle>Edit Your Fitness Profile</DialogTitle>
         </DialogHeader>

@@ -32,15 +32,18 @@ import {
 import ProfileModal from "@/components/ProfileModal";
 
 
-
 export function NavUser({
   user,
+  isProfileOpen,
+  setProfileOpen,
 }: {
   user: {
     name: string
     email: string
     avatar: string
   }
+  isProfileOpen: boolean
+  setProfileOpen: (open: boolean) => void
 }) {
   const { isMobile } = useSidebar()
 
@@ -86,7 +89,7 @@ export function NavUser({
               e.preventDefault()
             }}>
               <UserPen />
-              <ProfileModal />
+              <div onClick={() => setProfileOpen(true)}>Edit Profile</div>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <LogOut />
