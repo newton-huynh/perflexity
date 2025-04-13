@@ -15,9 +15,6 @@ def build_prompt(query: str, chunks: list[dict], user_profile: dict = None) -> s
             if value is None or value == "":
                 continue
 
-            if key == "toggleCitations":
-                print("!!!!!!!!!!!!!!!!!!!!!", value)
-
             if key == "name":
                 profile_str += f"- Name: {value}\n"
             elif key == "height":
