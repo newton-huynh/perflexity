@@ -255,7 +255,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* Section: Advanced */}
         <Card>
           <CardHeader>
-            <CardTitle>Advanced</CardTitle>
+            <CardTitle className="text-center">Advanced</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
             <LabelWrapper>
@@ -311,11 +311,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* Section: Extras */}
         <Card>
           <CardHeader>
-            <CardTitle>Extras</CardTitle>
+            <CardTitle className="text-center">Extras</CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col gap-6">
-            <LabelWrapper>
-              <Label>Response Length</Label>
+          <CardContent className="flex flex-row justify-between">
+            <LabelWrapper className="flex flex-col gap-4">
+              <Label>Response Length:</Label>
               <Slider
                 min={1}
                 max={10}
@@ -324,9 +324,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 onValueChange={([val]) => update("responseLength", val)}
               />
             </LabelWrapper>
-            <LabelWrapper>
-              <Label>Toggle Inline Citations</Label>
-              <Switch checked={profile.toggleCitations} onCheckedChange={(val) => update("toggleCitations", val)}  />
+            <LabelWrapper className="flex flex-col items-center justify-center text-center">
+              <Label>Toggle Inline Citations:</Label>
+              <Switch  className="align-center" checked={profile.toggleCitations} onCheckedChange={(val) => update("toggleCitations", val)}  />
             </LabelWrapper>
           </CardContent>
         </Card>

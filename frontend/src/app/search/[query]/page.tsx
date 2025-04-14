@@ -17,7 +17,7 @@ export default function SearchPage() {
     .replace(/-/g, " ")
     .replace(/^./, (char) => char.toUpperCase())
     .concat("?")
-  const testMode = false; // TODO: remove this
+  const testMode = true; // TODO: remove this
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
