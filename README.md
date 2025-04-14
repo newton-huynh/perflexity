@@ -93,7 +93,7 @@ PINECONE_INDEX_NAME=your-index
 ---
 
 ## 🧱 [Architecture Overview](https://drive.google.com/file/d/1eHzb_WSBHxOWOZ4IVBZplZ1UCJgCpw4f/view?usp=sharing)
-![Perflexity System Architecture](https://drive.google.com/uc?export=view&id=1jfjjRHGDXHSnQtzK46hGBcDqlddSHiLD)
+![Perflexity System Architecture](https://drive.google.com/uc?export=view&id=1eHzb_WSBHxOWOZ4IVBZplZ1UCJgCpw4f)
 
 
 ---
