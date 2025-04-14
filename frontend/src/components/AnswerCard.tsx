@@ -2,6 +2,9 @@
 
 import { Citation } from "@/lib/definitions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Markdown from "react-markdown";
+import CitationCarousel from "@/components/CitationCarousel";
+
 
 interface AnswerCardProps {
   citations: Citation[];
@@ -17,21 +20,10 @@ export default function AnswerCard({ citations, answer }: AnswerCardProps) {
           <TabsTrigger value="citations">Citations</TabsTrigger>
         </TabsList>
         <TabsContent value="answer">
-          <p>{answer}</p>
+          <Markdown>{answer}</Markdown>
         </TabsContent>
         <TabsContent value="citations">
-          {citations.map((citation, index) => (
-            <div key={index} className="mb-2">
-              <a
-                href={citation.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline"
-              >
-                {citation.ranking}. {citation.title}
-              </a>
-            </div>
-          ))}
+          <CitationCarousel citations={citations} answer={answer} />
         </TabsContent>
       </Tabs>
     </div>

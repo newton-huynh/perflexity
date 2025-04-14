@@ -12,11 +12,14 @@ import { getProfile } from "@/lib/storage";
 
 export default function SearchPage() {
   const { query } = useParams() as { query: string };
-  const [messages, setMessages] = useState<Message[]>([]);
   const formattedQuery = query
     .replace(/-/g, " ")
     .replace(/^./, (char) => char.toUpperCase())
-    .concat("?")
+    .concat("?");
+  const [messages, setMessages] = useState<Message[]>([
+    { question: formattedQuery, answer: "", citations: [] },
+  ]);
+
   const testMode = false; // TODO: remove this
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
