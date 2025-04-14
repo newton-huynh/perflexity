@@ -107,7 +107,7 @@ PINECONE_INDEX_NAME=your-index
 ---
 
 ## 🙌 Credits
-Built by Newton Huynh as part of the Perplexity AI Residency Challenge. Special thanks to:
+Built by Newton Huynh. Special thanks to:
 - OpenAI
 - Pinecone
 - ShadCN
