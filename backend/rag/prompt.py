@@ -70,7 +70,9 @@ Here are some relevant context chunks, only use the ones that are directly relev
 ---
 {chr(10).join(context_blocks)}
 
-Answer based on the user's profile, the provided context, and the user's question. Make it personalized.:
+Answer based on the user's profile, the provided context, and the user's question. Make it personalized.
+Respond in markdown syntax (headers, bullet points, bold, italics) especially bold key words and phrases.
+:
 """
     return prompt
 

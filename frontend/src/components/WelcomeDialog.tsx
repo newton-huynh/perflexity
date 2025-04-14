@@ -50,14 +50,14 @@ export default function WelcomeDialog({
           <DialogTitle>Welcome to Perflexity!</DialogTitle>
         </DialogHeader>
         <DialogDescription className="w-9/10 text-center">
-        <p>
+        
   💪 Ready to lift <strong> smarter</strong>, not <strong>harder?</strong><br />
   🧠 Craving <strong>personalized</strong> workouts built for you?<br />
   🍽️ Looking for tips that <strong>match your lifestyle?</strong><br /><br />
   Create your <strong>fitness profile</strong> and unlock <strong>personalized workouts</strong>, 
   <strong>nutrition tips</strong>, and <strong>pro-level insights</strong>—all tailored just for you. <br /><br/>
             Let’s get swole the smart way. 
-          </p>
+   
         </DialogDescription>
         <div className="flex flex-row gap-8 justify-around w-full">
           <Button
