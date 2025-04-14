@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { saveProfile, getProfile, clearProfile } from "@/lib/storage";
@@ -75,7 +74,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     if (saved) setProfile(saved);
   }, []);
 
-  const update = (key: string, value: any) => {
+  const update = (key: string, value: UserProfile[keyof UserProfile]) => {
     setProfile((prev) => ({ ...prev, [key]: value }));
   };
 

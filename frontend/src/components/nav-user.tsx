@@ -1,10 +1,7 @@
 "use client"
 
 import {
-  BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   UserPen
 } from "lucide-react"
@@ -17,10 +14,8 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -29,12 +24,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import ProfileModal from "@/components/ProfileModal";
+
 
 
 export function NavUser({
   user,
-  isProfileOpen,
   setProfileOpen,
 }: {
   user: {
