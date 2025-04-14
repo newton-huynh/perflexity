@@ -35,9 +35,20 @@ def retrieve_relevant_chunks(query_embedding: list[float], top_k: int = 5) -> li
     try:
         response = index.query(
             vector=query_embedding,
-            top_k=top_k,
+            top_k=top_k * 3, # in case we need to filter out duplicates
             include_metadata=True
         )
+
+        seen_ids = set()
+        unique_matches = []
+
+        for match in response.matches:
+            source_id = match.metadata.get("source_id")
+            if source_id not in seen_ids:
+                seen_ids.add(source_id)
+                unique_matches.append(match)
+            if len(unique_matches) == top_k:
+                break
 
         return [
             {
@@ -47,7 +58,7 @@ def retrieve_relevant_chunks(query_embedding: list[float], top_k: int = 5) -> li
                 "score": match.score,
                 "ranking": idx + 1
             }
-            for idx, match in enumerate(response.matches)
+            for idx, match in enumerate(unique_matches)
         ]
     except Exception as e:
         print(f"❌ Failed to query Pinecone: {e}")

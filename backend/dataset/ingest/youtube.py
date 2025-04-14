@@ -34,13 +34,19 @@ def get_youtube_metadata(video_id: str, api_key: str) -> dict:
         return None
 
     snippet = data["items"][0]["snippet"]
+
+    if "tags" in snippet:
+        tags = snippet["tags"]
+    else:
+        tags = []
+
     return {
-        "title": snippet["title"],
-        "channel_name": snippet["channelTitle"],
-        "channel_url": f"https://www.youtube.com/channel/{snippet['channelId']}",
-        "published_at": snippet["publishedAt"],
-        "thumbnail": snippet["thumbnails"]["default"]["url"],
-        "tags": snippet["tags"]
+        "title": snippet["title"] if snippet["title"] else "Untitled",
+        "channel_name": snippet["channelTitle"] if snippet["channelTitle"] else "Unknown Channel",
+        "channel_url": f"https://www.youtube.com/channel/{snippet['channelId']}" if snippet['channelId'] else None,
+        "published_at": snippet["publishedAt"] if snippet["publishedAt"] else None,
+        "thumbnail": snippet["thumbnails"]["default"]["url"] if snippet["thumbnails"]["default"]["url"] else None,
+        "tags": tags
     }
 
 # Processes a YouTube video URL and returns a StandardDoc object
@@ -55,7 +61,7 @@ def process_youtube(url: str) -> StandardDoc:
     transcript_text = " ".join([segment["text"] for segment in transcript])
 
     # Optional metadata
-    tags = ["youtube"]
+
     source_id = hashlib.md5(url.encode()).hexdigest()
 
     return StandardDoc(
