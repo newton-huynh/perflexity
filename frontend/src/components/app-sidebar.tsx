@@ -28,7 +28,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { saveProfile, getProfile, clearProfile } from "@/lib/storage";
 import Image from "next/image";
 import { UserProfile } from "@/lib/definitions";
-
+import { toast } from "sonner";
 import WelcomeDialog from "./WelcomeDialog";
 import ProfileModal from "./ProfileModal";
 const defaultProfile: UserProfile = {
@@ -333,10 +333,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter className="flex flex-col gap-2 p-4">
-        <Button variant="outline" onClick={handleReset}>
+        <Button variant="outline" onClick={() => {handleReset(); toast.success("Profile reset successfully")}} className="hover:bg-red-400 hover:text-white transition-all duration-300">
           Reset
         </Button>
-        <Button onClick={handleSave}>Save</Button>
+        <Button onClick={() => {handleSave(); toast.success("Profile saved successfully")}} className="hover:bg-emerald-400 hover:text-white transition-all duration-300">Save</Button>
       </SidebarFooter>
     </Sidebar>
   );
