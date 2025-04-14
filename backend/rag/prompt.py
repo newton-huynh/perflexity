@@ -10,21 +10,45 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def build_prompt(query: str, chunks: list[dict], user_profile: dict = None) -> str:
     profile_str = ""
     if user_profile:
-        profile_str = "\n".join([
-            f"- Name: {user_profile.get('name', 'N/A')}",
-            f"- Gender: {user_profile.get('gender', 'N/A')}",
-            f"- Race: {user_profile.get('race', 'N/A')}",
-            f"- Age: {user_profile.get('age', 'N/A')}",
-            f"- Goal: {user_profile.get('goal', 'N/A')}",
-            f"- Diet: {user_profile.get('diet', 'N/A')}",
-            f"- Gym Frequency: {user_profile.get('frequency', 'N/A')}",
-            f"- Experience: {user_profile.get('experience', 'N/A')}",
-            f"- Weight: {user_profile.get('weight', 'N/A')} lbs",
-            f"- Height: {user_profile.get('height', 'N/A')}",
-            f"- The user prefers a {user_profile.get('answer_style', 'N/A')} answer style",
-            f"- Favorite Influencer: {user_profile.get('influencer', 'N/A')}",
-            f"- Lifting Maxes: Squat: {user_profile.get('squat', 'N/A')} lbs, Bench: {user_profile.get('bench', 'N/A')} lbs, Deadlift: {user_profile.get('deadlift', 'N/A')} lbs"
-        ])
+
+        for key, value in user_profile.items():
+            if value is None or value == "":
+                continue
+
+            if key == "name":
+                profile_str += f"- Name: {value}\n"
+            elif key == "height":
+                profile_str += f"- Height: {value}\n"
+            elif key == "weight":
+                profile_str += f"- Weight: {value} lbs\n"
+            elif key == "gender":
+                profile_str += f"- Gender: {value}\n"
+            elif key == "race":
+                profile_str += f"- Race: {value}\n"
+            elif key == "age":
+                profile_str += f"- Age: {value}\n"
+            elif key == "goal":
+                profile_str += f"- Goal: {value}\n"
+            elif key == "diet":
+                profile_str += f"- Diet: {value}\n"
+            elif key == "frequency":
+                profile_str += f"- Gym Frequency: {value}\n"
+            elif key == "answerStyle":
+                profile_str += f"- Answer Style: {value}\n"
+            elif key == "influencer":
+                profile_str += f"- The user's favorite influencers are: {value}\n"
+            elif key == "squat":
+                profile_str += f"- Lifting Maxes: Squat: {value} lbs\n"
+            elif key == "bench":
+                profile_str += f"- Lifting Maxes: Bench: {value} lbs\n"
+            elif key == "deadlift":
+                profile_str += f"- Lifting Maxes: Deadlift: {value} lbs\n"
+            elif key == "responseLength":
+                profile_str += f"- On a scale of 1-10, with 1 being a very short response and 10 being a very long response, the provide a {value} response length\n"
+            elif key == "toggleCitations" and value == True:
+                profile_str += "Cite your sources inline using bracketed numbers that correspond to the provided context chunks, only if you are sure that the information is directly relevant to the user's question. For example, use [1], [2], [3] if referring to Context #1, Context #2, and Context #3 respectively. These numbers should match the order in which the context chunks are presented so that citations can later be mapped to their original sources. Only cite sources if they are directly relevant to the user's question."
+                
+            
 
     context_blocks = [
         f"Context #{i+1}:\n{chunk['text']}"
@@ -33,21 +57,20 @@ def build_prompt(query: str, chunks: list[dict], user_profile: dict = None) -> s
 
     prompt = f"""You are a helpful fitness assistant answering user questions based on retrieved evidence.
 
-User Profile:
-{profile_str}
+
 
 User asked: "{query}"
 
 Use the context below to answer clearly and of the user's desired answer style:
 
-Cite your sources inline using bracketed numbers that correspond to the provided context chunks. 
-For example, use [1], [2], [3] if referring to Context #1, Context #2, and Context #3 respectively.
-These numbers should match the order in which the context chunks are presented so that citations can later be mapped to their original sources.
-Only cite sources if they are directly relevant to the user's question.
+User Profile:
+{profile_str}
+
+Here are some relevant context chunks, only use the ones that are directly relevant to the user's question:
 ---
 {chr(10).join(context_blocks)}
 
-Answer:
+Answer based on the user's profile, the provided context, and the user's question. Make it personalized.:
 """
     return prompt
 

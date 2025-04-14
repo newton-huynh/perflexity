@@ -24,9 +24,10 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+
 import { useState } from "react";
 import { saveProfile, getProfile, clearProfile } from "@/lib/storage";
-
+import { toast } from "sonner";
 
 export function LabelWrapper({ children, className }: { children: React.ReactNode, className?: string }) {
   return (
@@ -234,8 +235,8 @@ export default function ProfileModal({ isProfileOpen, setProfileOpen, setProfile
         </Tabs>
 
         <div className="mt-2 flex gap-2 w-full justify-around ">
-          <Button onClick={handleReset} className="bg-red-300 hover:bg-red-600 self-start">Clear</Button>
-          <Button onClick={handleSave} className="hover:bg-green-600">Save</Button>
+          <Button onClick={() => {handleReset(); toast.success("Profile cleared successfully")}} className="bg-red-300 hover:bg-red-600 self-start">Clear</Button>
+          <Button onClick={() => {handleSave(); toast.success("Profile saved successfully")}} className="hover:bg-green-600">Save</Button>
         </div>
       </DialogContent>
     </Dialog>

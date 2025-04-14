@@ -23,13 +23,15 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { saveProfile, getProfile, clearProfile } from "@/lib/storage";
 import Image from "next/image";
-
+import { UserProfile } from "@/lib/definitions";
+import { toast } from "sonner";
 import WelcomeDialog from "./WelcomeDialog";
 import ProfileModal from "./ProfileModal";
-const defaultProfile = {
+const defaultProfile: UserProfile = {
   name: "",
   height: "",
   weight: "",
@@ -45,7 +47,7 @@ const defaultProfile = {
   answerStyle: "",
   influencer: "",
   responseLength: 5,
-  uploadedFile: "",
+  toggleCitations: false,
 };
 
 function LabelWrapper({
@@ -253,7 +255,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* Section: Advanced */}
         <Card>
           <CardHeader>
-            <CardTitle>Advanced</CardTitle>
+            <CardTitle className="text-center">Advanced</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
             <LabelWrapper>
@@ -309,41 +311,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* Section: Extras */}
         <Card>
           <CardHeader>
-            <CardTitle>Extras</CardTitle>
+            <CardTitle className="text-center">Extras</CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col gap-6">
-            <LabelWrapper>
-              <Label>Response Length</Label>
+          <CardContent className="flex flex-row justify-between">
+            <LabelWrapper className="flex flex-col gap-4">
+              <Label>Response Length:</Label>
               <Slider
                 min={1}
                 max={10}
                 step={1}
-                value={[profile.responseLength]}
+                value={[profile.responseLength ? profile.responseLength : 5]}
                 onValueChange={([val]) => update("responseLength", val)}
               />
             </LabelWrapper>
-            <LabelWrapper>
-              <Label>Upload Your Workout Split</Label>
-              <Input
-                type="file"
-                accept=".pdf,.txt,.csv"
-                onChange={(e) =>
-                  update("uploadedFile", e.target.files?.[0]?.name || "")
-                }
-              />
-              {profile.uploadedFile && (
-                <p className="text-xs mt-1">Uploaded: {profile.uploadedFile}</p>
-              )}
+            <LabelWrapper className="flex flex-col items-center justify-center text-center">
+              <Label>Toggle Inline Citations:</Label>
+              <Switch  className="align-center" checked={profile.toggleCitations} onCheckedChange={(val) => update("toggleCitations", val)}  />
             </LabelWrapper>
           </CardContent>
         </Card>
       </SidebarContent>
 
       <SidebarFooter className="flex flex-col gap-2 p-4">
-        <Button variant="outline" onClick={handleReset}>
+        <Button variant="outline" onClick={() => {handleReset(); toast.success("Profile reset successfully")}} className="hover:bg-red-400 hover:text-white transition-all duration-300">
           Reset
         </Button>
-        <Button onClick={handleSave}>Save</Button>
+        <Button onClick={() => {handleSave(); toast.success("Profile saved successfully")}} className="hover:bg-emerald-400 hover:text-white transition-all duration-300">Save</Button>
       </SidebarFooter>
     </Sidebar>
   );

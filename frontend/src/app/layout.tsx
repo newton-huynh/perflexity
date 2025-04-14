@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
           <div className="flex flex-1">
             <AppSidebar />
             <SidebarInset>
+              <Toaster />
               <div className="h-[calc(100svh-var(--header-height))] overflow-y-auto mt-(--header-height) flex flex-col justify-center items-center">
                 {children}
               </div>

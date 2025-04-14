@@ -14,7 +14,13 @@ import { getProfile } from "@/lib/storage";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-export default function WelcomeDialog({ isProfileOpen, setProfileOpen }: { isProfileOpen: boolean, setProfileOpen: (open: boolean) => void }) {
+export default function WelcomeDialog({
+  isProfileOpen,
+  setProfileOpen,
+}: {
+  isProfileOpen: boolean;
+  setProfileOpen: (open: boolean) => void;
+}) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const profile = getProfile();
@@ -39,17 +45,31 @@ export default function WelcomeDialog({ isProfileOpen, setProfileOpen }: { isPro
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {" "}
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Welcome to Perflexity</DialogTitle>
+      <DialogContent className="flex flex-col items-center gap-8">
+        <DialogHeader className="flex flex-col items-center gap-2">
+          <Image src="/images/logo.png" alt="logo" width={32} height={32} />
+          <DialogTitle>Welcome to Perflexity!</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          Want personalized fitness recommendations? Create a profile to get
-          started.
+        <DialogDescription className="w-9/10 text-center">
+        <p>
+  💪 Ready to lift <strong> smarter</strong>, not <strong>harder?</strong><br />
+  🧠 Craving <strong>personalized</strong> workouts built for you?<br />
+  🍽️ Looking for tips that <strong>match your lifestyle?</strong><br /><br />
+  Create your <strong>fitness profile</strong> and unlock <strong>personalized workouts</strong>, 
+  <strong>nutrition tips</strong>, and <strong>pro-level insights</strong>—all tailored just for you. <br /><br/>
+            Let’s get swole the smart way. 
+          </p>
         </DialogDescription>
-        <div className="flex flex-col gap-8">
-          <Button onClick={handleDismiss}>Dismiss</Button>
-          <Button onClick={handleEditProfile}>Edit Profile</Button>
+        <div className="flex flex-row gap-8 justify-around w-full">
+          <Button
+            onClick={handleDismiss}
+            className="bg-gray-400 hover:bg-red-600"
+          >
+            Skip
+          </Button>
+          <Button onClick={handleEditProfile} className="hover:bg-green-600">
+            Create Profile
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
