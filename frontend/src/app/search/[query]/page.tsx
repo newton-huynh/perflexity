@@ -32,7 +32,7 @@ export default function SearchPage() {
     setMessages([{ question: formattedQuery, answer: "", citations: [] }]);
 
     async function fetchInitial() {
-      const res = await fetch("http://localhost:8000/answer", {
+      const res = await fetch("https://perflexity-production.up.railway.app/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query, profile: getProfile() ?? {} }),
@@ -67,7 +67,7 @@ export default function SearchPage() {
     ]);
 
     // Step 2: Fetch the answer from the server
-    const res = await fetch("http://localhost:8000/answer", {
+    const res = await fetch("https://perflexity-production.up.railway.app/answer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query: newQuestion, profile: getProfile() ?? {} }),

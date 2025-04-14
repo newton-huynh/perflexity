@@ -16,7 +16,6 @@ interface AnswerCardProps {
 
 export default function CitationCarousel({
   citations,
-  answer,
 }: AnswerCardProps) {
   return (
     <div className="flex flex-col w-full">

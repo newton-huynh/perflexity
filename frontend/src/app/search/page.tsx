@@ -4,10 +4,7 @@ import {usePathname} from "next/navigation";
 
 
 export default function SearchPage() {
-  const handleSearch = (query: string) => {
-    // TODO: Implement search functionality
-    console.log("Search query:", query);
-  };
+
   const pathname = usePathname();
 
   return (

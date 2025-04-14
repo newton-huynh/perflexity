@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Tabs,
@@ -25,10 +24,9 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-import { useState } from "react";
-import { saveProfile, getProfile, clearProfile } from "@/lib/storage";
-import { toast } from "sonner";
 
+import { toast } from "sonner";
+import { UserProfile } from "@/lib/definitions";
 export function LabelWrapper({ children, className }: { children: React.ReactNode, className?: string }) {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
@@ -37,7 +35,7 @@ export function LabelWrapper({ children, className }: { children: React.ReactNod
   );
 }
 
-export default function ProfileModal({ isProfileOpen, setProfileOpen, setProfile, handleSave, handleReset, profile }: { isProfileOpen: boolean, setProfileOpen: (open: boolean) => void, setProfile: (profile: any) => void, handleSave: () => void, handleReset: (  ) => void, profile: any }) {
+export default function ProfileModal({ isProfileOpen, setProfileOpen, setProfile, handleSave, handleReset, profile }: { isProfileOpen: boolean, setProfileOpen: (open: boolean) => void, setProfile: (profile: UserProfile) => void, handleSave: () => void, handleReset: (  ) => void, profile: UserProfile }) {
 
 
   return (
